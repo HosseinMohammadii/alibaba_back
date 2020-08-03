@@ -9,6 +9,17 @@ def get_hotel_image_upload_path():
     pass
 
 
+CITY_TYPE_CHOICES = [
+    ('international', 'international'),
+    ('domestic', 'domestic'),
+]
+
+
+class City(models.Model):
+    name = models.CharField(max_length=64)
+    type = models.CharField(choices=CITY_TYPE_CHOICES, max_length=64)
+
+
 class Hotel(models.Model):
 
     owner = models.ForeignKey(
@@ -21,8 +32,9 @@ class Hotel(models.Model):
         null=True,
         blank=True,
     )
-    city = models.CharField(
-        max_length=128,
+    city = models.ForeignKey(
+        to=City,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
