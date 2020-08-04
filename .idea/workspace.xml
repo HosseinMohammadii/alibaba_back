@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5c94ea0f-f955-4486-8901-a9371688f4af" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customAuth/authentication_classes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customAuth/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customAuth/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alibaba/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/alibaba/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alibaba/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/alibaba/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customAuth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/customAuth/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/hotel/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/hotel/models.py" afterDir="false" />
@@ -46,6 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../alibaba" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
@@ -84,7 +81,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596489136370</updated>
-      <workItem from="1596489156195" duration="4865000" />
+      <workItem from="1596489156195" duration="14437000" />
     </task>
     <servers />
   </component>
@@ -100,22 +97,26 @@
       <screen x="53" y="24" width="1313" height="744" />
     </state>
     <state x="522" y="102" key="#com.intellij.ide.util.MemberChooser/53.24.1313.744@53.24.1313.744" timestamp="1596493583291" />
-    <state width="1267" height="193" key="GridCell.Tab.0.bottom" timestamp="1596493228983">
+    <state x="497" y="141" key="FileChooserDialogImpl" timestamp="1596556068509">
       <screen x="53" y="24" width="1313" height="744" />
     </state>
-    <state width="1267" height="193" key="GridCell.Tab.0.bottom/53.24.1313.744@53.24.1313.744" timestamp="1596493228983" />
-    <state width="1267" height="193" key="GridCell.Tab.0.center" timestamp="1596493228981">
+    <state x="497" y="141" key="FileChooserDialogImpl/53.24.1313.744@53.24.1313.744" timestamp="1596556068509" />
+    <state width="1267" height="193" key="GridCell.Tab.0.bottom" timestamp="1596577713111">
       <screen x="53" y="24" width="1313" height="744" />
     </state>
-    <state width="1267" height="193" key="GridCell.Tab.0.center/53.24.1313.744@53.24.1313.744" timestamp="1596493228981" />
-    <state width="1267" height="193" key="GridCell.Tab.0.left" timestamp="1596493228976">
+    <state width="1267" height="193" key="GridCell.Tab.0.bottom/53.24.1313.744@53.24.1313.744" timestamp="1596577713111" />
+    <state width="1267" height="193" key="GridCell.Tab.0.center" timestamp="1596577713111">
       <screen x="53" y="24" width="1313" height="744" />
     </state>
-    <state width="1267" height="193" key="GridCell.Tab.0.left/53.24.1313.744@53.24.1313.744" timestamp="1596493228976" />
-    <state width="1267" height="193" key="GridCell.Tab.0.right" timestamp="1596493228982">
+    <state width="1267" height="193" key="GridCell.Tab.0.center/53.24.1313.744@53.24.1313.744" timestamp="1596577713111" />
+    <state width="1267" height="193" key="GridCell.Tab.0.left" timestamp="1596577713110">
       <screen x="53" y="24" width="1313" height="744" />
     </state>
-    <state width="1267" height="193" key="GridCell.Tab.0.right/53.24.1313.744@53.24.1313.744" timestamp="1596493228982" />
+    <state width="1267" height="193" key="GridCell.Tab.0.left/53.24.1313.744@53.24.1313.744" timestamp="1596577713110" />
+    <state width="1267" height="193" key="GridCell.Tab.0.right" timestamp="1596577713111">
+      <screen x="53" y="24" width="1313" height="744" />
+    </state>
+    <state width="1267" height="193" key="GridCell.Tab.0.right/53.24.1313.744@53.24.1313.744" timestamp="1596577713111" />
     <state x="203" y="24" key="SettingsEditor" timestamp="1596489329440">
       <screen x="53" y="24" width="1313" height="744" />
     </state>
@@ -124,5 +125,9 @@
       <screen x="53" y="24" width="1313" height="744" />
     </state>
     <state x="370" y="211" key="com.intellij.ide.util.TipDialog/53.24.1313.744@53.24.1313.744" timestamp="1596489160418" />
+    <state x="357" y="121" width="704" height="522" key="find.popup" timestamp="1596574249123">
+      <screen x="53" y="24" width="1313" height="744" />
+    </state>
+    <state x="357" y="121" width="704" height="522" key="find.popup/53.24.1313.744@53.24.1313.744" timestamp="1596574249123" />
   </component>
 </project>

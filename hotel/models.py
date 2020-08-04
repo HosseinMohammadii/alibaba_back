@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -5,13 +6,28 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-def get_hotel_image_upload_path():
-    pass
+def get_hotel_image_upload_path(instance, filename):
+    return "hotel/files/hotels/{}/image/{}".format(instance.id, filename)
 
 
 CITY_TYPE_CHOICES = [
     ('international', 'international'),
     ('domestic', 'domestic'),
+]
+
+FACILITY_TYPE_CHOICES = [
+    ('customer_services', 'customer_services'),
+    ('public_spaces', 'public_spaces'),
+    ('shopping', 'shopping'),
+    ('transportation', 'transportatio'),
+    ('sports', 'sports'),
+    ('housekeeping', 'housekeeping'),
+    ('hotel_services', 'hotel_services'),
+    ('activities', 'activities'),
+    ('misc', 'misc'),
+    ('entertainment', 'entertainment'),
+    ('foods_and_drinks', 'foods_and_drinks'),
+    ('business_meetings', 'business_meetings'),
 ]
 
 
@@ -32,12 +48,19 @@ class Hotel(models.Model):
         null=True,
         blank=True,
     )
-    city = models.ForeignKey(
-        to=City,
-        on_delete=models.SET_NULL,
+    # city = models.ForeignKey(
+    #     to=City,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    # )
+
+    city = models.CharField(
+        max_length=64,
         null=True,
         blank=True,
     )
+
     address = models.TextField(
         max_length=512,
         null=True,
@@ -45,6 +68,13 @@ class Hotel(models.Model):
     )
     instructions = models.TextField(
         max_length=2048,
+        null=True,
+        blank=True,
+    )
+
+    stars = models.PositiveSmallIntegerField(
+        default=3,
+        validators=[MaxValueValidator(5)],
         null=True,
         blank=True,
     )
@@ -84,6 +114,17 @@ class Hotel(models.Model):
         blank=True,
     )
 
+    loc_x = models.DecimalField(
+        max_digits=18,
+        decimal_places=16,
+        default=-54.041680317979825,
+    )
+    loc_y = models.DecimalField(
+        max_digits=18,
+        decimal_places=16,
+        default=39.10622758640926,
+    )
+
 
 class Facility(models.Model):
     hotel = models.ForeignKey(
@@ -93,6 +134,18 @@ class Facility(models.Model):
 
     type = models.CharField(
         max_length=64,
+        choices=FACILITY_TYPE_CHOICES,
+    )
+
+    description = models.CharField(
+        max_length=128
+    )
+
+
+class Breadcrumb(models.Model):
+    hotel = models.ForeignKey(
+        to=Hotel,
+        on_delete=models.CASCADE,
     )
 
     description = models.CharField(

@@ -59,6 +59,16 @@ class PublicHotelRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = HotelSerializer
 
 
+class PublicHotelListAPIViewByCity(generics.ListAPIView):
+    queryset = Hotel.objects.all()
+    serializer_class = HotelSerializer
+
+    def get_queryset(self):
+        city = self.kwargs['city']
+        qs = Hotel.objects.filter(city__iexact=city)
+        return qs
+
+
 class OwnerHotelListCreateAPIView(generics.ListCreateAPIView):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer

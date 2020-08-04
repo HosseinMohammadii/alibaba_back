@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from hotel.models import Hotel, Facility, Room, City
+
+from hotel.models import Hotel, Facility, Room, City, Breadcrumb, FACILITY_TYPE_CHOICES
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -14,7 +15,6 @@ class CitySerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    city = CitySerializer()
 
     class Meta:
         model = Room
@@ -35,23 +35,51 @@ class FacilitySerializer(serializers.ModelSerializer):
 
 class HotelSerializer(serializers.ModelSerializer):
 
+    _id = serializers.IntegerField(source='id', read_only=True)
     facilities = serializers.SerializerMethodField()
     rooms = serializers.SerializerMethodField()
+    images = serializers.SerializerMethodField()
+    breadcrumbs = serializers.SerializerMethodField()
+    loc = serializers.SerializerMethodField()
 
     class Meta:
         model = Hotel
         fields = [
-            'id',
+            '_id',
             'name', 'city', 'address', 'instructions',
-            'image1', 'image2', 'image3', 'image4', 'image5', 'image6',
+            'images',
             'facilities',
             'rooms',
+            'breadcrumbs',
+            'loc',
         ]
 
     def get_facilities(self, obj):
-        qs = Facility.objects.filter(hotel=obj)
-        return FacilitySerializer(qs, many=True).data
+        facility_types = [facility_type[0] for facility_type in FACILITY_TYPE_CHOICES]
+        res = dict()
+
+        for facility_type in facility_types:
+            res[facility_type] = Facility.objects.filter(hotel=obj, type=facility_type).values_list('description', flat=True)
+
+        return res
 
     def get_rooms(self, obj):
         qs = Room.objects.filter(hotel=obj)
         return RoomSerializer(qs, many=True).data
+
+    def get_images(self, obj):
+        request = self.context.get("request")
+        images = []
+        for i in range(1, 7):
+            image = getattr(obj, 'image'+str(i))
+            if image:
+                images.append(request.build_absolute_uri(image.url))
+
+        return images
+
+    def get_breadcrumbs(self, obj):
+        res = Breadcrumb.objects.filter(hotel=obj).values_list('description', flat=True)
+        return res
+
+    def get_loc(self, obj):
+        return {'x': obj.loc_x, 'y': obj.loc_y}
