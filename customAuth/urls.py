@@ -7,4 +7,5 @@ urlpatterns = [
     # path('jwt/token/refresh/', refresh_jwt_token),
     path('jwt/token/', views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('jwt/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('signup/', views.UserCreateAPIView.as_view(), name='signup'),
 ]
