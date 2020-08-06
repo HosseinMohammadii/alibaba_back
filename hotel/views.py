@@ -1,7 +1,8 @@
 import binascii
 import io
-
+import defusedxml
 from django.shortcuts import render
+import xml
 from rest_framework import generics
 from rest_framework.decorators import api_view, renderer_classes, parser_classes
 from rest_framework.parsers import BaseParser
@@ -9,7 +10,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_xml.renderers import XMLRenderer
-from rest_framework_xml.parsers import XMLParser
+# from rest_framework_xml.parsers import XMLParser
 from rest_framework.renderers import BrowsableAPIRenderer
 from django.utils.encoding import smart_text
 from rest_framework import renderers
@@ -19,6 +20,8 @@ from hotel.models import Hotel, Room, Facility, City
 
 from customAuth.permissions import IsAuthenticated, UserIsHotelOwner
 from hotel import permissions
+
+from hotel.parsers import XMLParser
 
 
 # @api_view(['GET'])
@@ -81,7 +84,8 @@ class PlainTextRenderer(renderers.BaseRenderer):
 # @parser_classes([PlainTextParser])
 # @renderer_classes([PlainTextRenderer])
 @parser_classes([XMLParser])
-@renderer_classes([JSONRenderer])
+# @renderer_classes([JSONRenderer])
+@renderer_classes([XMLRenderer])
 @api_view(['POST'])
 def convert_xml_to_json(request, format=None):
     # print(request.META['CONTENT_TYPE'])
@@ -89,35 +93,23 @@ def convert_xml_to_json(request, format=None):
     # print(request)
     f = io.StringIO(request.body.decode('utf-8'))
     xml_parser = XMLParser()
-    obj = xml_parser.parse(stream=f)
-    print(obj)
-    # data = request.data
-    # print(type(data))
+    data = xml_parser.parse(stream=f)
+
+    # print(data)
+    # data = XMLRenderer().render(data=data)
+    # data = JSONRenderer().render(data=data)
+
     # print(data)
     return Response(
-        data=obj,
+        data=data,
         status=200,
-        # content_type='text/plain',
+        # content_type='application/json',
     )
 
 
 # class XMLToJSON(APIView):
 #     parser_classes = [PlainTextParser]
 #     renderer_classes =
-#
-#     def post(self, request, *args, **kwargs):
-#         print(request.META['CONTENT_TYPE'])
-#         print(request.META.get('HTTP_CONTENT_TYPE'))
-#         # print(request.META['body'])
-#         print(request.body)
-#         print(request)
-#         # print(type(data))
-#         # print(data)
-#         return Response(
-#             data=request.META['CONTENT_TYPE'],
-#             status=200,
-#             content_type='text/plain'
-#         )
 
 
 class PublicHotelListAPIView(generics.ListAPIView):

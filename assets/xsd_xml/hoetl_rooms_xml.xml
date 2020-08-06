@@ -1,0 +1,14 @@
+<rooms>
+    <room>
+        <name>test1</name>
+        <breakfast>true</breakfast>
+        <price>200</price>
+        <total>1000</total>
+    </room>
+    <room>
+        <name>test2</name>
+        <breakfast>false</breakfast>
+        <price>200</price>
+        <total>1000</total>
+    </room>
+</rooms>

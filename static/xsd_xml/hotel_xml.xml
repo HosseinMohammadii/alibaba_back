@@ -1,0 +1,9 @@
+<hotel>
+    <city>Paris</city>
+    <from>2020-05-15</from>
+    <to>2020-05-18</to>
+    <guests>
+        <parents>2</parents>
+        <children>1</children>
+    </guests>
+</hotel>

@@ -1,0 +1,14 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="Employee" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="id=" type="xsd:integer"/>
+                <xsd:element name="SSN=" type="xsd:string"/>
+                <xsd:element name="Name" type="xsd:string"/>
+                <xsd:element name="DateOfBirth" type="xsd:date"/>
+                <xsd:element name="EmployeeType" type="xsd:string"/>
+                <xsd:element name="Salary" type="xsd:long"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

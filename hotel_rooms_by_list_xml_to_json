@@ -1,0 +1,40 @@
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://127.0.0.1:8000/static/xsd_xml/hotel_rooms_xsd.xsd">
+    <rooms>
+        <list-item>
+
+                <name>test1</name>
+                <breakfast>true</breakfast>
+                <price>200</price>
+                <total>1000</total>
+
+        </list-item>
+        <list-item>
+                <name>test2</name>
+                <breakfast>false</breakfast>
+                <price>200</price>
+                <total>1000</total>
+
+        </list-item>
+    </rooms>
+</root>
+
+-----------------------------------------------------------------------------
+
+
+{
+    "rooms": [
+        {
+            "breakfast": "true",
+            "total": 1000,
+            "name": "test1",
+            "price": 200
+        },
+        {
+            "breakfast": "false",
+            "total": 1000,
+            "name": "test2",
+            "price": 200
+        }
+    ]
+}
