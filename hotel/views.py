@@ -1,6 +1,7 @@
 import binascii
 import io
 import defusedxml
+from django.db.models import Count, Sum
 from django.shortcuts import render
 import xml
 from rest_framework import generics
@@ -85,7 +86,7 @@ class PlainTextRenderer(renderers.BaseRenderer):
 # @renderer_classes([PlainTextRenderer])
 @parser_classes([XMLParser])
 # @renderer_classes([JSONRenderer])
-@renderer_classes([XMLRenderer])
+@renderer_classes([JSONRenderer])
 @api_view(['POST'])
 def convert_xml_to_json(request, format=None):
     # print(request.META['CONTENT_TYPE'])
@@ -107,9 +108,56 @@ def convert_xml_to_json(request, format=None):
     )
 
 
-# class XMLToJSON(APIView):
-#     parser_classes = [PlainTextParser]
-#     renderer_classes =
+@parser_classes([XMLParser])
+@renderer_classes([JSONRenderer])
+@api_view(['POST'])
+def hotel_search(request, format=None):
+    # print(request.META['CONTENT_TYPE'])
+    # print(request.body)
+    # print(request)
+    f = io.StringIO(request.body.decode('utf-8'))
+    xml_parser = XMLParser()
+    request_data = xml_parser.parse(stream=f)
+
+    qs = Hotel.objects.none()
+    city = request_data.get('city', None)
+    guests = request_data.get('guests', None)
+    adults_number = None
+    children_number = None
+    if guests is not None:
+        adults_number = guests.get('parents', None)
+        children_number = guests.get('children', None)
+
+    if city is not None:
+        qs |= Hotel.objects.filter(city__icontains=city)
+    else:
+        qs |= Hotel.objects.all()
+
+    if adults_number is not None:
+        temp_qs = qs
+        temp = temp_qs.annotate(sum_adults=Sum('room__adults_number'))
+        temp_hotel_ids = temp.filter(sum_adults__gte=adults_number).values_list('id', flat=True)
+        qs = qs.filter(id__in=temp_hotel_ids)
+
+    if children_number is not None:
+        temp_qs = qs
+        temp = temp_qs.annotate(sum_children=Sum('room__children_number'))
+        temp_hotel_ids = temp.filter(sum_children__gte=children_number).values_list('id', flat=True)
+        qs = qs.filter(id__in=temp_hotel_ids)
+
+    qs = qs.distinct()
+    serializer = HotelSerializer(qs, many=True, context={'request': request})
+
+    # print(data)
+    # data = XMLRenderer().render(data=data)
+    # data = JSONRenderer().render(data=data)
+
+    # print(data)
+    return Response(
+        data={'hotels': serializer.data},
+        status=200,
+        # content_type='application/json',
+    )
 
 
 class PublicHotelListAPIView(generics.ListAPIView):
