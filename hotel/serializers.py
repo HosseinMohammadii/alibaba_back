@@ -58,6 +58,7 @@ class HotelSerializer(serializers.ModelSerializer):
             'breadcrumbs',
             'loc',
             'price',
+            'stars',
         ]
 
     def get_facilities(self, obj):
