@@ -20,8 +20,13 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = [
             'id',
-            'hotel', 'name', 'has_breakfast', 'adults_number', 'children_number',
+            'hotel', 'name', 'has_breakfast', 'adults_number', 'children_number', 'total'
         ]
+        extra_kwargs = {
+            'total': {
+                'required': False,
+            }
+        }
 
 
 class FacilitySerializer(serializers.ModelSerializer):
@@ -52,6 +57,7 @@ class HotelSerializer(serializers.ModelSerializer):
             'rooms',
             'breadcrumbs',
             'loc',
+            'price',
         ]
 
     def get_facilities(self, obj):

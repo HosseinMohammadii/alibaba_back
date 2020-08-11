@@ -112,9 +112,6 @@ def convert_xml_to_json(request, format=None):
 @renderer_classes([JSONRenderer])
 @api_view(['POST'])
 def hotel_search(request, format=None):
-    # print(request.META['CONTENT_TYPE'])
-    # print(request.body)
-    # print(request)
     f = io.StringIO(request.body.decode('utf-8'))
     xml_parser = XMLParser()
     request_data = xml_parser.parse(stream=f)
@@ -155,8 +152,53 @@ def hotel_search(request, format=None):
     # print(data)
     return Response(
         data={'hotels': serializer.data},
-        status=200,
-        # content_type='application/json',
+    )
+
+
+@parser_classes([XMLParser])
+@renderer_classes([JSONRenderer])
+@api_view(['POST'])
+def hotel_rooms_search(request, format=None):
+
+    f = io.StringIO(request.body.decode('utf-8'))
+    xml_parser = XMLParser()
+    request_data = xml_parser.parse(stream=f)
+
+    qs = Hotel.objects.none()
+    guests = request_data.get('guests', None)
+    adults_number = None
+    children_number = None
+    if guests is not None:
+        adults_number = guests.get('parents', None)
+        children_number = guests.get('children', None)
+
+    # if id is not None:
+    #     qs |= Hotel.objects.filter(city__icontains=city)
+    # else:
+    #     qs |= Hotel.objects.all()
+
+    if adults_number is not None:
+        temp_qs = qs
+        temp = temp_qs.annotate(sum_adults=Sum('room__adults_number'))
+        temp_hotel_ids = temp.filter(sum_adults__gte=adults_number).values_list('id', flat=True)
+        qs = qs.filter(id__in=temp_hotel_ids)
+
+    if children_number is not None:
+        temp_qs = qs
+        temp = temp_qs.annotate(sum_children=Sum('room__children_number'))
+        temp_hotel_ids = temp.filter(sum_children__gte=children_number).values_list('id', flat=True)
+        qs = qs.filter(id__in=temp_hotel_ids)
+
+    qs = qs.distinct()
+    serializer = HotelSerializer(qs, many=True, context={'request': request})
+
+    # print(data)
+    # data = XMLRenderer().render(data=data)
+    # data = JSONRenderer().render(data=data)
+
+    # print(data)
+    return Response(
+        data={'hotels': serializer.data},
     )
 
 
@@ -232,3 +274,19 @@ class OwnerRoomRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIVie
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [IsAuthenticated, UserIsHotelOwner, permissions.IsRoomHotelOwner]
+
+
+class RoomListByHotelAPIView(generics.ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    renderer_classes = [JSONRenderer, ]
+
+    def get_queryset(self):
+        id = self.kwargs['id']
+        try:
+            hotel = Hotel.objects.get(id=id)
+            qs = Room.objects.filter(hotel=hotel)
+        except Hotel.DoesNotExist:
+            qs = Room.objects.none()
+
+        return qs

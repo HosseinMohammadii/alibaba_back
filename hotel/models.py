@@ -125,6 +125,10 @@ class Hotel(models.Model):
         default=39.10622758640926,
     )
 
+    price = models.PositiveIntegerField(
+        default=1626321
+    )
+
 
 class Facility(models.Model):
     hotel = models.ForeignKey(
@@ -173,5 +177,11 @@ class Room(models.Model):
 
     children_number = models.PositiveSmallIntegerField(
         default=0
+    )
+
+    total = models.PositiveIntegerField(
+        default=200000,
+        blank=True,
+        null=True,
     )
 
