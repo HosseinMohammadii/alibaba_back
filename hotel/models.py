@@ -72,7 +72,7 @@ class Hotel(models.Model):
         blank=True,
     )
 
-    stars = models.PositiveSmallIntegerField(
+    stars = models.SmallIntegerField(
         default=3,
         validators=[MaxValueValidator(5)],
         null=True,
