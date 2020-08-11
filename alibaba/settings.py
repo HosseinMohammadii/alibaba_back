@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_xml',
+    'corsheaders',
 
 
 
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
+    'middlewares.middlewares.CORSMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -161,3 +164,19 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/files/'
 MEDIA_ROOT = 'files'
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS
+from corsheaders.defaults import default_headers
+
+# TODO: Make this accurate
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'CLIENT-TIMEZONE',
+    'CLIENT_TIMEZONE',
+    'HTTP-CLIENT-TIMEZONE',
+    'HTTP_CLIENT_TIMEZONE',
+    'HTTP_CLIENT-TIMEZONE',
+    'authorization',
+    'AUTHORIZATION',
+    'Authorization'
+]

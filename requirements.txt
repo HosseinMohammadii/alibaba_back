@@ -1,5 +1,6 @@
 defusedxml==0.6.0
 Django==2.2.15
+django-cors-headers==3.4.0
 django-enumfields==2.0.0
 djangorestframework==3.11.0
 djangorestframework-simplejwt==4.3.0
