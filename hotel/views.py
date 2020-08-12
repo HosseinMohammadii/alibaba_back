@@ -289,4 +289,8 @@ class RoomListByHotelAPIView(generics.ListAPIView):
         except Hotel.DoesNotExist:
             qs = Room.objects.none()
 
+        has_breakfast = self.request.query_params.get('has_breakfast')
+
+        qs = qs.filter(has_breakfast=has_breakfast)
+
         return qs
