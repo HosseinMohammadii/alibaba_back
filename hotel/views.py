@@ -291,6 +291,6 @@ class RoomListByHotelAPIView(generics.ListAPIView):
 
         has_breakfast = self.request.query_params.get('has_breakfast')
 
-        qs = qs.filter(has_breakfast=has_breakfast)
+        # qs = qs.filter(has_breakfast=has_breakfast)
 
         return qs
